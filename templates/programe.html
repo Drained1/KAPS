@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
+    <meta name="description" content="Program Search"/>
+    <head>
+        <meta charset="utf-8">
+        <title>Program Search</title>
+        <style>
+
+            html body {
+                margin: 0px;
+                padding: 0px;
+                width: 100%;
+                height: 100%;
+                background-color: rgb(20, 20, 20);
+                font-family: Lato, Helvetica, Corbel, sans-serif;
+            }
+            .btn-outline-light {
+                transition-duration: 0.3s;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(25,25,25,25.19);
+                color: #dddddd;
+                background-color: #111111;
+                width: 200px;
+            }
+            
+            .btn-outline-light:hover {
+                box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(75,75,75,75.19);
+                color: #ffffff;
+                background-color: #555555;
+            }
+            .button2 {
+                width: 100px;
+                height: 40px;
+                border-radius: 10px;
+                border: none;
+                background-color: rgb(74, 140, 255);
+                color: white;
+                box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.3);
+                cursor: pointer;
+                transition: 0.1s;
+                font-size: 15px;
+                margin: 10px;
+                text-align: center;
+            }
+            .button2:hover {
+                box-shadow: 0px 3px 12px 0px rgba(0, 0, 0, 0.5);
+                margin: 8px;
+                width: 104px;
+                height: 44px;
+                font-size: 16px;
+            }
+            .button2:active {
+                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+                margin: 12px;
+                width: 96px;
+                height: 36px;
+                font-size: 14px;
+            }
+            .over {
+                background-color: rgb(51, 51, 51, 51, 51);
+                position: fixed;
+                float: right;
+                width: 100%;
+                height: 100%;
+                z-index: 2;
+                left: 0px;
+                top: 0px;
+                transition: 0.3s;
+                display: block;
+            }
+            .popup {
+                background-color: rgb(0, 0, 0, 0.25);
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+                color: white;
+                border-radius: 40px;
+                display: inline-box;
+                position: fixed;
+                float: center;
+                overflow: auto;
+                width: 560px;
+                height: 200px;
+                margin: calc(50% - 300px);
+                margin-top: calc(30% - 100px);
+                text-align: center;
+                background-color: rgb(51, 51, 51);
+                padding: 20px;
+            }
+            #programs{
+                text-align: center;
+            }
+            #program{
+                border: 0px solid white;
+                word-wrap: break-word;
+                width: 150px; 
+            }
+
+            h1{
+                color: #dddddd;
+            }
+            h3{
+                color: #cccccc;
+            }
+            .loading {
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1;
+                width: 120px;
+                height: 120px;
+                margin: -70px 0 0 -70px;
+                border: 16px solid #999999;
+                border-radius: 50%;
+                border-top: 16px solid #333333;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+            }
+            @-webkit-keyframes spin {
+                0% { -webkit-transform: rotate(0deg); }
+                100% { -webkit-transform: rotate(360deg); }
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+    </style>
+    </head>
+    <body>
+    
+    <div style='text-align: center;'>
+    <h1>Program Search</h1>
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br>
+
+    <div id="btns" style="text-align:center;">
+    <h3>Error: Bad Program ID</h3><br>
+    <h3>Enter program ID here:</h3><br>
+    <input type="text" id="inputURL" name="inputURL" value="">
+    <input type="button" value="Search" OnClick="buttonClick()"/>
+    </div>
+    <div class="loading" id="loading" style='text-align:center;display:none;">'></div>
+    
+    <script language="javascript" type="text/javascript">
+        function buttonClick(){
+        var url = document.getElementById("inputURL").value;
+        window.location = "program/"+url;
+        }
+    </script>     
+
+    </body>
+</html>

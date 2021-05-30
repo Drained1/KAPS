@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <meta name="description" content="User Khan Academy Lists. A dark mode place for you to view all the projects on khan academy."/>
+    <head>
+        <meta charset="utf-8">
+        <title>{{user}} Projects</title>
+        <style>
+
+            html body {
+                margin: 0px;
+                padding: 0px;
+                width: 100%;
+                height: 100%;
+                background-color: rgb(20, 20, 20);
+                font-family: Lato, Helvetica, Corbel, sans-serif;
+            }
+            .btn-outline-light {
+                transition-duration: 0.3s;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(25,25,25,25.19);
+                color: #dddddd;
+                background-color: #111111;
+                width: 200px;
+            }
+            
+            .btn-outline-light:hover {
+                box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(75,75,75,75.19);
+                color: #ffffff;
+                background-color: #555555;
+            }
+            .button2 {
+                width: 100px;
+                height: 40px;
+                border-radius: 10px;
+                border: none;
+                background-color: rgb(74, 140, 255);
+                color: white;
+                box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.3);
+                cursor: pointer;
+                transition: 0.1s;
+                font-size: 15px;
+                margin: 10px;
+                text-align: center;
+            }
+            .button2:hover {
+                box-shadow: 0px 3px 12px 0px rgba(0, 0, 0, 0.5);
+                margin: 8px;
+                width: 104px;
+                height: 44px;
+                font-size: 16px;
+            }
+            .button2:active {
+                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+                margin: 12px;
+                width: 96px;
+                height: 36px;
+                font-size: 14px;
+            }
+            .over {
+                background-color: rgb(51, 51, 51, 51, 51);
+                position: fixed;
+                float: right;
+                width: 100%;
+                height: 100%;
+                z-index: 2;
+                left: 0px;
+                top: 0px;
+                transition: 0.3s;
+                display: block;
+            }
+            .popup {
+                background-color: rgb(0, 0, 0, 0.25);
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+                color: white;
+                border-radius: 40px;
+                display: inline-box;
+                position: fixed;
+                float: center;
+                overflow: auto;
+                width: 560px;
+                height: 200px;
+                margin: calc(50% - 300px);
+                margin-top: calc(30% - 100px);
+                text-align: center;
+                background-color: rgb(51, 51, 51);
+                padding: 20px;
+            }
+            #programs{
+                background-color: #444444;
+                text-align: center;
+            }
+            #program{
+                border: 0px solid white;
+                word-wrap: break-word;
+                width: 150px; 
+            }
+
+            h1{
+                color: #dddddd;
+            }
+            .loading {
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1;
+                width: 120px;
+                height: 120px;
+                margin: -70px 0 0 -70px;
+                border: 16px solid #999999;
+                border-radius: 50%;
+                border-top: 16px solid #333333;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+            }
+            @-webkit-keyframes spin {
+                0% { -webkit-transform: rotate(0deg); }
+                100% { -webkit-transform: rotate(360deg); }
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            textarea {
+                background-color: #111111;
+                color: #cccccc
+            }
+    </style>
+    </head>
+    <body>
+    
+    <div style='text-align: center;'>
+    <h1>{{ program_id }}</h1>
+    </div>
+
+    <div style="text-align: right;" id='top-buttons'>
+        <a href='/program'><button class="button2">Home</button></a>
+        
+    </div>
+
+    <hr>
+    <div style="color:#ffffff;text-align:center;">
+    <h3>Code Here</h3><br>
+    <textarea id="Code" cols="100" rows="20"></textarea>
+    <h3>Click save to save to local storage. This will overwrite your previous project.</h3>
+    <button class="button2" onclick="save()">Save</button>
+    <a href="/saves"><button class="button2">Saves</button></a>
+    </div>
+
+    <div class="loading" id="loading" style='text-align:center;display:none;">'></div>
+
+    <script>
+var id ='{{ program_id }}'
+var text = ""
+
+function getJSON(a, b) {
+    getJSON.callbacks || (getJSON.callbacks = {});
+    var c = "abcdefghijklmnopqrstuvwxyz";
+    c += c.toUpperCase();
+    for (var d = ""; d.length < 9 || getJSON.callbacks[d]; d += c[Math.floor(Math.random() * c.length)]) { }
+    getJSON.callbacks[d] = b, a += a.indexOf("?") > -1 ? "&" : "?", a += "callback=getJSON.callbacks." + d;
+    var e = document.createElement("script");
+    e.src = a, document.head.appendChild(e)
+}
+
+getJSON("https://www.khanacademy.org/api/internal/scratchpads/"+id+"?format=pretty", function(data){
+    text = data.revision["code"];
+    document.getElementById("Code").value=data.revision["code"];
+})
+
+var localStorageContent = window.localStorage.getItem('saves');
+
+let allsaves;
+if(localStorageContent === null){
+    allsaves = [];
+}
+
+function save(){
+    if(text in allsaves){
+        alert("Didnt save this. It is already saved.");
+    }
+    else{
+        allsaves.push(text);
+        window.localStorage.setItem('saves', JSON.stringify(allsaves));
+        alert("Saved!");
+    }
+}
+
+    </script>
+
+    </body>
+</html>
